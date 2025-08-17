@@ -1,9 +1,10 @@
 # https://www.pclassic.org/static/media/PClassic2023fProblems.62ca5b098f5a6f3af47d.pdf
 
+# distancia de Chebyshev
+def dist(p0, p1):
+    return max(abs(p0[0]-p1[0]) , abs(p0[1] - p1[1]))
 
-def dist(p, o):
-    return max(abs(o[0]-p[0]) , abs(o[1] - p[1]))
-
+# cria um mapa de referencias letra=coordenada
 def gera_tabuleiro(tab):
     d = {}
 
@@ -12,7 +13,9 @@ def gera_tabuleiro(tab):
             d[tab[i][j]] = (i,j)
     return d
 
+
 '''
+// versao C++
 map<char, pair<int, int>> gera_tabuleiro(char mapa[5][5]){
     map<char, pair<int, int>> d;
 
@@ -23,6 +26,7 @@ map<char, pair<int, int>> gera_tabuleiro(char mapa[5][5]){
 }
 '''  
 
+# gera o vetor de posicoes no mapa
 def calcula_letras(palavra, mapa):
     pos = []
     for l in palavra:
@@ -40,19 +44,11 @@ def menor_distancia(lh, rh, d, palavra):
 
 
     '''
-    int main() {
-        
-        vector<string> saidas;
-        int n = 6;
+    vector<string> combinacoes;
 
-        for (int i = 0; i < (1 << n); i++) 
-            saidas.push_back(bitset<32>(i).to_string().substr(32 - n));
-        
-        for(auto s : saidas)
-            cout << s << endl;
+    for (int i = 0; i < (1 << n); i++) 
+        combinacoes.push_back(bitset<10000>(i).to_string().substr(10000 - n));
 
-        return 0;
-    }
     '''
 
     olh, orh = lh, rh
@@ -64,33 +60,12 @@ def menor_distancia(lh, rh, d, palavra):
             l = palavra[j]
             if combinacoes[i][j] == '0':
                 distancia += dist(lh, d[l])+1
-                #print(dist(lh, d[l]), 'l', l, end=' ')
                 lh = d[l]
             else:
-
-                #print()
-
                 distancia += dist(rh, d[l])+1
-                #print(dist(rh, d[l]), 'r', l, end=' ')
                 rh = d[l]
-        #print()
         distancias[i] = distancia
     return min(distancias)
-
-
-'''
-mapa = ["abcde",
-        "fghij",
-        "klmno",
-        "pqrst",
-        "uvwxy"]
-
-palavra = "casa"
-
-lh = 'l'
-rh = 'n'
-'''
-####
 
 mapa = []
 for i in range(5):
@@ -105,10 +80,3 @@ lh = d[lh]
 rh = d[rh]
 
 print(menor_distancia(lh, rh, d, palavra))
-
-#print(d['b'])
-#print(d['q'])
-#print(dist(d['b'], d['q']))
-
-
-
