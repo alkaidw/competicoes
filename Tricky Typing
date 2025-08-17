@@ -1,0 +1,112 @@
+
+def dist(p, o):
+    return max(abs(o[0]-p[0]) , abs(o[1] - p[1]))
+
+def gera_tabuleiro(tab):
+    d = {}
+
+    for i in range(5):
+        for j in range(5):
+            d[tab[i][j]] = (i,j)
+    return d
+
+'''
+map<char, pair<int, int>> gera_tabuleiro(char mapa[5][5]){
+    map<char, pair<int, int>> d;
+
+    for(int i = 0; i < 5; ++i)
+        for(int j = 0; j < 5; ++j)
+            d[tab[i][j]] = {i, j}
+    return d;      
+}
+'''  
+
+def calcula_letras(palavra, mapa):
+    pos = []
+    for l in palavra:
+        pos.append(mapa[l])
+    return pos
+
+def menor_distancia(lh, rh, d, palavra):
+
+    n = len(palavra)
+    distancias = [0]*2**n
+    
+    combinacoes = []
+    for i in range(2**n):  # de 0 até 15
+        combinacoes.append(f"{i:0{n}b}")   # imprime em binário com 4 dígitos
+
+
+    '''
+    int main() {
+        
+        vector<string> saidas;
+        int n = 6;
+
+        for (int i = 0; i < (1 << n); i++) 
+            saidas.push_back(bitset<32>(i).to_string().substr(32 - n));
+        
+        for(auto s : saidas)
+            cout << s << endl;
+
+        return 0;
+    }
+    '''
+
+    olh, orh = lh, rh
+    for i in range(len(combinacoes)):
+        lh, rh = olh, orh
+        distancia = 0
+        for j in range(len(palavra)):
+            
+            l = palavra[j]
+            if combinacoes[i][j] == '0':
+                distancia += dist(lh, d[l])+1
+                #print(dist(lh, d[l]), 'l', l, end=' ')
+                lh = d[l]
+            else:
+
+                #print()
+
+                distancia += dist(rh, d[l])+1
+                #print(dist(rh, d[l]), 'r', l, end=' ')
+                rh = d[l]
+        #print()
+        distancias[i] = distancia
+    return min(distancias)
+
+
+'''
+mapa = ["abcde",
+        "fghij",
+        "klmno",
+        "pqrst",
+        "uvwxy"]
+
+palavra = "casa"
+
+lh = 'l'
+rh = 'n'
+'''
+####
+
+mapa = []
+for i in range(5):
+    mapa.append(input())
+
+lh, rh = input().split()
+
+palavra = input()
+
+d = gera_tabuleiro(mapa)
+lh = d[lh]
+rh = d[rh]
+
+print(menor_distancia(lh, rh, d, palavra))
+
+#print(d['b'])
+#print(d['q'])
+#print(dist(d['b'], d['q']))
+
+
+
