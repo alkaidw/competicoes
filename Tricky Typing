@@ -1,3 +1,5 @@
+# https://www.pclassic.org/static/media/PClassic2023fProblems.62ca5b098f5a6f3af47d.pdf
+
 
 def dist(p, o):
     return max(abs(o[0]-p[0]) , abs(o[1] - p[1]))
